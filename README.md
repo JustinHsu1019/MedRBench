@@ -1,6 +1,8 @@
 # MedR-Bench 
 The official code for "Quantifying the Reasoning Abilities of LLMs on Real-world Clinical Cases".
 
+[Paper (Nature Communications)](https://www.nature.com/articles/s41467-025-64769-1)
+
 [Paper (Arxiv version)](https://arxiv.org/abs/2503.04691)
 
 [Snapshots of searched websites](https://huggingface.co/datasets/Henrychur/MedRBench-Knowledge-Snapshots)
