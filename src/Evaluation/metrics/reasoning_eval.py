@@ -1,5 +1,8 @@
-from web_search import BingSearchTool
-from utils import workflow, workflow_multi_turn, load_instruction, safe_json_parse
+from .web_search import BingSearchTool
+from .utils import workflow, workflow_multi_turn, load_instruction, safe_json_parse
+import os
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # -------------- Evaluate one step efficiency -------------- # 
 
@@ -15,7 +18,7 @@ def evaluate_efficiency(current_reasoning_step, previous_reasoning_steps, case_s
     Returns:
         Efficiency category: 'Citation', 'Repetition', 'Reasoning', or 'Redundancy'
     """
-    prompt_template = load_instruction('./instructions/reasoning_efficiency.txt')
+    prompt_template = load_instruction(os.path.join(SCRIPT_DIR, 'instructions', 'reasoning_efficiency.txt'))
     input_text = prompt_template.format(
         current_step=current_reasoning_step,
         previous_steps=previous_reasoning_steps,
@@ -54,9 +57,9 @@ def evaluate_factuality(case_info, reasoning_step, evaluation_model='gpt-4o-2024
     
     # Extract keywords for search
     if is_treatment:
-        keywords_prompt_template = load_instruction('./instructions/treatment_plan_extract_keywords.txt')
+        keywords_prompt_template = load_instruction(os.path.join(SCRIPT_DIR, 'instructions', 'treatment_plan_extract_keywords.txt'))
     else:
-        keywords_prompt_template = load_instruction('./instructions/extract_keywords.txt')
+        keywords_prompt_template = load_instruction(os.path.join(SCRIPT_DIR, 'instructions', 'extract_keywords.txt'))
     input_text = keywords_prompt_template.format(case=case_info, reasoning_step=reasoning_step)
     system_prompt = 'You are a professional evaluator of medical knowledge.'
     keywords = workflow(model_name=evaluation_model, instruction=system_prompt, input_text=input_text)
@@ -70,7 +73,7 @@ def evaluate_factuality(case_info, reasoning_step, evaluation_model='gpt-4o-2024
     })
 
     # Evaluate factual correctness
-    factuality_prompt_template = load_instruction('./instructions/reasoning_factuality.txt')
+    factuality_prompt_template = load_instruction(os.path.join(SCRIPT_DIR, 'instructions', 'reasoning_factuality.txt'))
     input_text = factuality_prompt_template.format(
         case=case_info, 
         reasoning_step=reasoning_step, 
@@ -133,7 +136,7 @@ def split_ground_truth_reasoning(gt_reasoning, evaluation_model = 'gpt-4o-2024-1
     Returns:
         Formatted string with separated reasoning steps
     """
-    prompt_template = load_instruction('./instructions/reasoning_split_gt_steps.txt')
+    prompt_template = load_instruction(os.path.join(SCRIPT_DIR, 'instructions', 'reasoning_split_gt_steps.txt'))
     input_text = prompt_template.format(gt_reasoning=gt_reasoning)
     system_prompt = 'You are a reliable thought process organizer.'
     output = workflow(model_name=evaluation_model, instruction=system_prompt, input_text=input_text)
@@ -150,7 +153,7 @@ def check_step_hit(ground_truth_step, output_reasoning, evaluation_model = 'gpt-
     Returns:
         Boolean indicating whether the step is covered in the output
     """
-    prompt_template = load_instruction('./instructions/reasoning_check_hit.txt')
+    prompt_template = load_instruction(os.path.join(SCRIPT_DIR, 'instructions', 'reasoning_check_hit.txt'))
     input_text = prompt_template.format(a_reasoning_step=ground_truth_step, out_reasoning=output_reasoning)
     system_prompt = 'You are a reliable thought process evaluator.'
     output = workflow(model_name=evaluation_model, instruction=system_prompt, input_text=input_text)

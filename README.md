@@ -73,11 +73,7 @@ We also provide example usage of the evaluation code in the Evaluation directory
 
 Here's an example command for running the treatment accuracy evaluation:
 ```
-python treatment_final_accuracy.py \
-    --model deepseek-r1 \
-    --output-dir YOUR_OUTPUT_DIR \
-    --patient-cases data/MedRBench/treatment_496_cases_with_rare_disease_165.json \
-    --model-outputs data/InferenceResults/treatment_planning.json
+python treatment_final_accuracy.py --model deepseek-r1 --output-dir data/ResultEval --patient-cases ../../data/MedRBench/treatment_496_cases_with_rare_disease_165.json --model-outputs ../../data/InferenceResults/treatment_planning.json
 ```
 
 ## Contact

@@ -35,9 +35,23 @@ def evaluate_case(case_data, output_directory, model_name):
         # Get ground truth and model prediction
         ground_truth = case_data['generate_case']['treatment_plan_results']
         model_prediction_raw = case_data['results']['content']
-        
+
+        if isinstance(model_prediction_raw, list):
+            # OpenAI / DeepSeek / Gemini 常見格式
+            model_prediction_raw = "\n".join(
+                item.get("text", "") for item in model_prediction_raw if isinstance(item, dict)
+            )
+
+        if not isinstance(model_prediction_raw, str):
+            raise TypeError(f"Unexpected model output type: {type(model_prediction_raw)}")
+
         # Extract the answer part if it contains the specific format
-        model_prediction = model_prediction_raw.split('### Answer').split('### Answer:')[1].strip()
+        if '### Answer:' in model_prediction_raw:
+            model_prediction = model_prediction_raw.split('### Answer:')[1].strip()
+        elif '### Answer' in model_prediction_raw:
+            model_prediction = model_prediction_raw.split('### Answer')[1].strip()
+        else:
+            model_prediction = model_prediction_raw
         
         # Evaluate accuracy using imported function
         keywords, search_results, is_accurate = eval_accuracy_with_websearch(
@@ -61,7 +75,6 @@ def evaluate_case(case_data, output_directory, model_name):
             
     except Exception as e:
         logger.error(f'Error processing case {case_data["id"]}: {str(e)}')
-
 
 def worker_process(task_queue):
     """Process evaluation tasks from a queue."""

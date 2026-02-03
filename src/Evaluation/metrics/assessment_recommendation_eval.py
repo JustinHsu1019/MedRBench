@@ -1,4 +1,4 @@
-from utils import workflow, load_instruction, safe_json_parse
+from .utils import workflow, load_instruction, safe_json_parse
 
 def parse_info_requirements(info_required_text):
     """Parse information requirements into structured format.

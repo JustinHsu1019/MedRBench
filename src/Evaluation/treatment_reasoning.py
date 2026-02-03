@@ -5,7 +5,7 @@ import argparse
 import multiprocessing
 from multiprocessing import Manager
 
-from utils import split_reasoning
+from .utils import split_reasoning
 from metrics.reasoning_eval import (
     eval_reasoning_efficiency_factuality,
     eval_reasoning_completeness

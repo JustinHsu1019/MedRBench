@@ -13,7 +13,7 @@ def workflow(model_name, instruction, input_text):
     selected_key = random.choice(api_keys).strip()
     
     client = OpenAI(
-        base_url="https://api.gpts.vin/v1",
+        # base_url="https://api.gpts.vin/v1",
         api_key=selected_key
     )
 
