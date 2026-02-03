@@ -31,7 +31,7 @@ In this paper, we assess the quality of reasoning processes in Large Language Mo
 ### 1. Environment Setup
 Since this project uses Selenium to simulate browser-based internet searches, you need to install Selenium:
 ```
-pip install selenium
+pip install -r requirements.txt
 ```
 
 You'll also need to prepare the appropriate API keys. In the Inference module, modify the constants in the respective Python files according to your service provider and API key. For example:
