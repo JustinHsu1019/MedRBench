@@ -45,7 +45,7 @@ For the Evaluation component, add your GPT API key to the `Evaluation/metrics/gp
 The inference section contains four files. Running different files will invoke specific models to perform inference under various settings:
 - `oracle_diagnose.py` Diagnostic task where the model receives complete patient information (including auxiliary examination results) and makes a diagnosis.
 - `one_turn.py` Diagnostic task where the model receives basic patient information, performs one round of assessment recommendation, and then makes a diagnosis based on the assessment results.
-- `free_trun.py` Diagnostic task where the model receives basic patient information, performs multiple rounds of assessment recommendations until it determines it has sufficient information, and then makes a diagnosis.
+- `free_turn.py` Diagnostic task where the model receives basic patient information, performs multiple rounds of assessment recommendations until it determines it has sufficient information, and then makes a diagnosis.
 - `oracle_treatment_planning.py` Treatment task where the model receives complete patient information and develops a treatment plan.
 
 For example, to run **oracle diagnose** for all six models:
