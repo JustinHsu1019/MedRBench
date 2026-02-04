@@ -5,7 +5,8 @@ import argparse
 import multiprocessing
 from multiprocessing import Manager
 
-from .utils import split_reasoning, extract_ancillary_tests
+# from .utils import split_reasoning, extract_ancillary_tests
+from .utils import extract_ancillary_tests
 from metrics.assessment_recommendation_eval import eval_dynamic_asking_info_precision_recall, parse_info_requirements
 
 # Configuration constants

@@ -1,5 +1,6 @@
 import re
-from typing import List, Optional
+# from typing import List, Optional
+from typing import List
 
 def get_reasoning_content(content: str) -> str:
     content = content.replace('```', '').strip()
