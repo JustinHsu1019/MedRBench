@@ -6,7 +6,7 @@ import multiprocessing
 from multiprocessing import Manager
 
 # from .utils import split_reasoning, extract_ancillary_tests
-from .utils import extract_ancillary_tests
+from utils import extract_ancillary_tests
 from metrics.assessment_recommendation_eval import eval_dynamic_asking_info_precision_recall, parse_info_requirements
 
 # Configuration constants
@@ -29,8 +29,8 @@ def evaluate_case(data, save_root, model_name):
     
     try:
         # Extract assistant answers from messages
-        assistant_answers = [msg for msg in data.get('deepseek_messages', []) 
-                           if msg.get('role') == 'assistant'][:-1][:15]
+        assistant_answers = [msg for msg in data.get('results', {}).get('messages', []) 
+                        if msg.get('role') == 'assistant'][:-1][:15]
         
         if not assistant_answers:
             logger.warning(f"No assistant answers found for case {case_id}")
@@ -167,6 +167,10 @@ def main(model_name, patient_case_filepath, model_output_filepath, output_direct
 
 
 if __name__ == '__main__':
+    """
+python free_turn_assessment_recommendation.py --model qwq --patient-cases ../../data/MedRBench/diagnosis_957_cases_with_rare_disease_491.json --model-outputs ../../data/InferenceResults/free_turn_assessment_recommendation+final_diagnosis.json --output-dir ./reasoning_results    
+    """
+
     parser = argparse.ArgumentParser(description='Evaluate model reasoning on treatment planning tasks')
     parser.add_argument('--model', type=str, required=True, 
                       choices=['qwq', 'o3-mini', 'gemini2-ft', 'deepseek-r1', 'baichuan-m1', 'deepseek-r1-thinkingprocess'],

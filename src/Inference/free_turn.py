@@ -4,7 +4,6 @@ import re
 import time
 import random
 import requests
-import numpy as np
 import tqdm
 from multiprocessing import Pool
 from openai import OpenAI
